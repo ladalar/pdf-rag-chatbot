@@ -2,9 +2,6 @@
 
 This chatbot is as an educational tool that's built to answer questions related to the Swebok textbook, [Software Engineering Body of Knowledge (SWEBOK)](https://www.computer.org/education/bodies-of-knowledge/software-engineering). The chatbot was built by team 3 for [CSE 6550: Software Engineering Concepts](https://catalog.csusb.edu/coursesaz/cse/)
 
-[Website](https://sec.cse.csusb.edu/team3/)  
-[Jupyter notebook](https://sec.cse.csusb.edu/team3/jupyter)
-
 ## Prerequisites
 
 Before you begin, make sure you have the following installed on your machine:
@@ -21,12 +18,12 @@ The `setup.py` script automates the setup process, including downloading the rep
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/DrAlzahraniProjects/csusb_fall2024_cse6550_team3.git
+   git clone https://github.com/ladalar/pdf-rag-chatbot.git
    ```
 
 2. **Navigate to the Project Directory**:
    ```bash
-   cd csusb_fall2024_cse6550_team3
+   cd pdf-rag-chatbot
    ```
 3. **Update Local Repository**:
    ```
