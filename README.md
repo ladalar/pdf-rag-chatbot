@@ -46,43 +46,6 @@ The `setup.py` script automates the setup process, including downloading the rep
    - Website: [http://localhost:5003/team3](http://localhost:5003/team3)
 
 
-## Jupyter Notebook Setup (Handled Separately)
-
-To run the Jupyter Notebook independently from the repository, please follow these steps:
-
- Jupyter Notebook: [main.ipynb](https://github.com/DrAlzahraniProjects/csusb_fall2024_cse6550_team3/blob/main/jupyter/main.ipynb)
-
-1. Download the Required File:
-
-- Jupyter Notebook: ```main.ipynb```.
-
-2. Create a New Directory:
-
-- Ensure a clean environment by creating a new directory to avoid file path issues during execution.
-
-3. Move the File:
-
-- Place the ```main.ipynb``` file in the newly created directory.
-
-4. Navigate to the New Directory:
-
-- Open a terminal and use the `cd` command to navigate to the directory where you saved ```main.ipynb```. For example:
-```bash
-  cd ~/csusb_fall2024_cse6550_team3/jupyter
-```
-5. Launch Jupyter Notebook:
-
-- In the terminal, type the following command to start Jupyter Notebook:
-```bash
-jupyter notebook --port=6003
-```
-
-- This will open the Jupyter Notebook interface in your web browser, where you can open ```main.ipynb``` and run it.
-
-- If it doesn't open, use the following link: http://localhost:6003/tree
-
-- For advanced testing and debugging, refer to the provided [Jupyter notebook](https://sec.cse.csusb.edu/team3/jupyter).
-
 
 ## Manual Docker Setup (Alternative)
 
