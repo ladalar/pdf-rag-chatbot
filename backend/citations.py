@@ -23,7 +23,7 @@ def format_citations(citations):
     """
     pdf_path = f"{os.getenv('CORPUS_SOURCE')}/textbook.pdf"
     links = [
-        f'<a href="/team3/?view=pdf&file={pdf_path}&page={citation["page"]}" target="_blank">[{index + 1}]</a>'
+        f'<a href="/?view=pdf&file={pdf_path}&page={citation["page"]}" target="_blank">[{index + 1}]</a>'
         for index, citation in enumerate(citations)
     ]
     return "\n\nSource: " + "".join(links)
@@ -40,4 +40,3 @@ def handle_citations(relevant_docs):
         citations = format_citations(page_numbers)
         return citations
     return None
-    

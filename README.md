@@ -46,7 +46,6 @@ The `setup.py` script automates the setup process, including downloading the rep
    - Website: [http://localhost:5003/team3](http://localhost:5003/team3)
 
 
-
 ## Manual Docker Setup (Alternative)
 
 If for any reason you cannot use `setup.py`, follow the steps below:
@@ -135,8 +134,6 @@ Below is a list of answerable and unanswerable questions that will be used to ev
 
 - **Setup and Automation**:
   - `setup.py`: Automates downloading, building, and running the application.
-- **Jupyter Notebooks**:
-  - `jupyter/main.ipynb`: Contains Jupyter notebook for advanced testing and debugging.
 - **Frontend**:
   - `frontend/streamlit.py`: Main Streamlit app file.
   - `frontend/styles/`: Contains CSS styles.

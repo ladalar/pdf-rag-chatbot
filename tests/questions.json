@@ -46,10 +46,10 @@
 				"What is the weather at San Bernardino?",
 				"Where is California located in USA?",
 				"Who is the president of USA?(OK)",
-				"Is theory of algorithm a core subject at CSUSB?",
+				"Is theoretical computer science a core subject?",
 				"How to create a textbook chatbot?",
 				"What is cse?",
-				"who teach the course cse6550?"
+				"Who teaches this subject?"
 			]
 		},
 		{
@@ -68,10 +68,10 @@
 			"unanswerable": [
 				"Use of coyote onecard?",
 				"Super computer?",
-				"What subject does Dr. Alzharani teach?",
+				"What subject does this instructor teach?",
 				"Radiography?",
 				"Affiliate marketing?",
-				"What are the core subjects for MS students at CSUSB?",
+				"What are the core subjects for graduate students?",
 				"Virtual environment?",
 				"Python script?",
 				"Leading IT company in USA?",
@@ -96,7 +96,6 @@
 				"What is your first and last name?",
 				"hi",
 				"ZAP",
-				"How to use Jupyter notebook?",
 				"How to run docker?",
 				"1 + 1",
 				" ",
@@ -126,7 +125,7 @@
 				"reference",
 				"equation",
 				"microsoft stock price",
-				"CSE 6550",
+				"Course number",
 				"matrix"
 			]
 		}

@@ -56,7 +56,7 @@ def format_metric(value):
 
 def display_confusion_matrix():
     """Display confusion matrix and associated metrics in the sidebar."""
-    st.sidebar.markdown("<h2><a href='https://github.com/DrAlzahraniProjects/csusb_fall2024_cse6550_team3?tab=readme-ov-file#evaluation-questions'>Evaluation Report</a></h2>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h2><a href='https://github.com/ladalar/pdf-rag-chatbot?tab=readme-ov-file#evaluation-questions'>Evaluation Report</a></h2>", unsafe_allow_html=True)
 
     # Fetch confusion matrix and metrics
     results = get_metrics()
@@ -79,7 +79,7 @@ def display_confusion_matrix():
     }
 
     # KEY METRICS
-    st.sidebar.markdown("<h3><a href='https://github.com/DrAlzahraniProjects/csusb_fall2024_cse6550_team3?tab=readme-ov-file#evaluation-questions'>Key Metrics</a></h3>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h3><a href='https://github.com/ladalar/pdf-rag-chatbot?tab=readme-ov-file#evaluation-questions'>Key Metrics</a></h3>", unsafe_allow_html=True)
     st.sidebar.markdown(
         f"""
         <div class='metric-container'>
@@ -97,7 +97,7 @@ def display_confusion_matrix():
     )
 
     # CONFUSION MATRIX
-    st.sidebar.markdown("<h3><a href='https://github.com/DrAlzahraniProjects/csusb_fall2024_cse6550_team3?tab=readme-ov-file#evaluation-questions'>Confusion Matrix</a></h3>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h3><a href='https://github.com/ladalar/pdf-rag-chatbot?tab=readme-ov-file#evaluation-questions'>Confusion Matrix</a></h3>", unsafe_allow_html=True)
     st.sidebar.markdown(
         f"""
         <table class="confusion-matrix-table">
@@ -120,7 +120,7 @@ def display_confusion_matrix():
     )
 
     # Other Metrics
-    st.sidebar.markdown("<h3><a href='https://github.com/DrAlzahraniProjects/csusb_fall2024_cse6550_team3?tab=readme-ov-file#evaluation-questions'>Other Metrics</a></h3>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h3><a href='https://github.com/ladalar/pdf-rag-chatbot?tab=readme-ov-file#evaluation-questions'>Other Metrics</a></h3>", unsafe_allow_html=True)
     st.sidebar.markdown(
         f"""
         <div class='metric-container'>

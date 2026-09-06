@@ -12,7 +12,7 @@ BASELINE_QUESTIONS = {
     "What is the purpose of static analysis in software testing?": True,
 
     # 10 Unanswerable Questions
-    "What class does Dr. Alzahrani teach?": False,
+    "What subject is being taught?": False,
     "How will AI evolve in the next 100 years?": False,
     "What GPA do you have?": False,
     "What is the smallest possible Turing machine?": False,
