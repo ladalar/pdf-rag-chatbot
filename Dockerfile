@@ -65,9 +65,6 @@ COPY . /app
 # Expose Streamlit port
 EXPOSE 8501
 
-# Expose Jupyter port
-EXPOSE 6003
-
 # Add the conda environment's bin directory to PATH
 ENV PATH=/opt/miniforge/envs/app_env/bin:$PATH
 

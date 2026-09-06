@@ -134,8 +134,6 @@ Below is a list of answerable and unanswerable questions that will be used to ev
 
 - **Setup and Automation**:
   - `setup.py`: Automates downloading, building, and running the application.
-- **Jupyter Notebooks**:
-  - `jupyter/main.ipynb`: Contains Jupyter notebook for advanced testing and debugging.
 - **Frontend**:
   - `frontend/streamlit.py`: Main Streamlit app file.
   - `frontend/styles/`: Contains CSS styles.
