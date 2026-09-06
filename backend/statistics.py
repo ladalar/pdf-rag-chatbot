@@ -18,7 +18,7 @@ from sqlalchemy import (
 )
 
 Base = declarative_base()
-engine = create_engine('sqlite:///team3.db', echo=False) # Set echo=True for debuggin
+engine = create_engine('sqlite:///chatbot.db', echo=False) # Set echo=True for debuggin
 Session = sessionmaker(bind=engine)
 
 ###################

@@ -35,7 +35,7 @@ def stop_and_remove_containers(ports):
 def build_docker_image(mistral_key):
     """Build the Docker image."""
     print("Building the Docker image...")
-    run_command(f"docker build -t team3-app . --build-arg MISTRAL={mistral_key}", "Failed to build Docker image")
+    run_command(f"docker build -t pdf-rag-chatbot . --build-arg MISTRAL={mistral_key}", "Failed to build Docker image")
 
 
 def display_loading_bar(duration):
@@ -68,11 +68,11 @@ def display_loading_bar(duration):
 def run_docker_container():
     """Run the Docker container."""
     print("Running the Docker container...")
-    run_command("docker run -d -p 5003:5003 team3-app", "Failed to run Docker container")
+    run_command("docker run -d -p 8501:8501 pdf-rag-chatbot", "Failed to run Docker container")
     print("Docker container started successfully!")
     display_loading_bar(30)  # 30 seconds duration
     print("You can now access the application:")
-    print("Website: http://localhost:5003/team3")
+    print("Website: http://localhost:8501")
     print("Wait 30 seconds more when accessing the webserver.")  # Additional message
 
 
@@ -80,7 +80,7 @@ def main():
     print("Starting cross-platform automation script.....")
 
     # Step 1: Stop and remove existing Docker containers
-    ports = [5003]
+    ports = [8501]
     stop_and_remove_containers(ports)
 
     # Step 2: Build the Docker image

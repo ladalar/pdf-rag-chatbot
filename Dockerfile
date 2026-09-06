@@ -41,10 +41,10 @@ RUN arch=$(uname -m) && \
 ENV PATH=/opt/miniforge/bin:$PATH
 
 # Create a new environment with Python 3.11
-RUN mamba create -n team3_env python=3.11 -y
+RUN mamba create -n app_env python=3.11 -y
 
 # Activate the new environment
-SHELL ["mamba", "run", "-n", "team3_env", "/bin/bash", "-c"]
+SHELL ["mamba", "run", "-n", "app_env", "/bin/bash", "-c"]
 
 # Copy requirements.txt into the container
 COPY requirements.txt /app/requirements.txt
@@ -57,19 +57,19 @@ RUN python -c "from langchain_huggingface import HuggingFaceEmbeddings; \
                HuggingFaceEmbeddings(model_name='Alibaba-NLP/gte-large-en-v1.5', model_kwargs={'trust_remote_code': True})"
 
 # Install other required packages with pip
-RUN /opt/miniforge/envs/team3_env/bin/pip install rank_bm25 streamlit-pdf-viewer PyMuPDF nemoguardrails
+RUN /opt/miniforge/envs/app_env/bin/pip install rank_bm25 streamlit-pdf-viewer PyMuPDF nemoguardrails
 
 # Copy the current directory contents into the container at /app
 COPY . /app
 
 # Expose Streamlit port
-EXPOSE 5003
+EXPOSE 8501
 
 # Expose Jupyter port
 EXPOSE 6003
 
 # Add the conda environment's bin directory to PATH
-ENV PATH=/opt/miniforge/envs/team3_env/bin:$PATH
+ENV PATH=/opt/miniforge/envs/app_env/bin:$PATH
 
 # Set entry point and default command
 ENTRYPOINT ["python"]

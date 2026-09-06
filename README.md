@@ -46,7 +46,6 @@ The `setup.py` script automates the setup process, including downloading the rep
    - Website: [http://localhost:5003/team3](http://localhost:5003/team3)
 
 
-
 ## Manual Docker Setup (Alternative)
 
 If for any reason you cannot use `setup.py`, follow the steps below:

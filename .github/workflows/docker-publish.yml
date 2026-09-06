@@ -51,7 +51,7 @@ jobs:
       run: |
         source $HOME/mambaforge/bin/activate
         mamba init bash
-        mamba create -n team3_env python=3.11 -y
+        mamba create -n app_env python=3.11 -y
         mamba install --yes --file requirements.txt
       shell: bash
 
@@ -63,8 +63,8 @@ jobs:
         push: true
         platforms: linux/amd64,linux/arm64
         tags: |
-          ghcr.io/${{ env.REPO }}/team3-app:latest
-          docker.io/${{ secrets.DOCKERHUB_USERNAME }}/team3-app:latest  
+          ghcr.io/${{ env.REPO }}/pdf-rag-chatbot:latest
+          docker.io/${{ secrets.DOCKERHUB_USERNAME }}/pdf-rag-chatbot:latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
