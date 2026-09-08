@@ -1,6 +1,6 @@
 # Textbook Chatbot
 
-This chatbot is as an educational tool that's built to answer questions related to the Swebok textbook, [Software Engineering Body of Knowledge (SWEBOK)](https://www.computer.org/education/bodies-of-knowledge/software-engineering). The chatbot was built by team 3 for [CSE 6550: Software Engineering Concepts](https://catalog.csusb.edu/coursesaz/cse/)
+This chatbot answers questions related to the [Software Engineering Body of Knowledge (SWEBOK)](https://www.computer.org/education/bodies-of-knowledge/software-engineering) textbook.
 
 ## Prerequisites
 
@@ -39,11 +39,11 @@ The `setup.py` script automates the setup process, including downloading the rep
    ```
 
 4. **Follow On-Screen Prompts**:
-   - The script will ask for the Mistral API key (provided in the team discussion on Canvas).
+   - The script will ask for a Mistral API key.
    - It will stop any existing containers, pull updates, build the Docker image, and run the container.
 
 5. **Access the Application**:
-   - Website: [http://localhost:5003/team3](http://localhost:5003/team3)
+   - Website: [http://localhost:8501](http://localhost:8501)
 
 
 ## Manual Docker Setup (Alternative)
@@ -52,12 +52,12 @@ If for any reason you cannot use `setup.py`, follow the steps below:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/DrAlzahraniProjects/csusb_fall2024_cse6550_team3.git
+   git clone https://github.com/ladalar/pdf-rag-chatbot.git
    ```
 
 2. **Navigate to the Project Directory**:
    ```bash
-   cd csusb_fall2024_cse6550_team3
+   cd pdf-rag-chatbot
    ```
 
 3. **Pull Updates**:
@@ -81,26 +81,26 @@ If for any reason you cannot use `setup.py`, follow the steps below:
 
 5. **Build Docker Image**:
    ```bash
-   docker build -t team3-app . --build-arg MISTRAL=<your_api_key>
+   docker build -t pdf-rag-chatbot . --build-arg MISTRAL=<your_api_key>
    ```
 
 6. **Run Docker Container**:
    ```bash
-   docker run -d -p 5003:5003 team3-app
+   docker run -d -p 8501:8501 pdf-rag-chatbot
    ```
 **Access the Application**:
-   - Website: [http://localhost:5003/team3](http://localhost:5003/team3)
+   - Website: [http://localhost:8501](http://localhost:8501)
 
 
 ## Testing
 
 1. **Build Docker image**
    ```bash
-   docker build -t team3-app .
+   docker build -t pdf-rag-chatbot .
    ```
 2. **Run tests**
    ```bash
-   docker run --env-file .env -v $(pwd):/app --entrypoint python team3-app -m pytest tests/test_questions.py -p no:warnings --tb=no -s
+   docker run --env-file .env -v $(pwd):/app --entrypoint python pdf-rag-chatbot -m pytest tests/test_questions.py -p no:warnings --tb=no -s
    ```
 
 ## Evaluation Questions
@@ -109,7 +109,7 @@ Below is a list of answerable and unanswerable questions that will be used to ev
 
 | **Answerable**                                                     | **Unanswerable**                                                        |
 |--------------------------------------------------------------------|-------------------------------------------------------------------------|
-| Who is Hironori Washizaki?                                         | What class does Dr. Alzahrani teach?                   |
+| Who is Hironori Washizaki?                                         | What subject is being taught?                           |
 | How does software testing impact the overall software development lifecycle? | How will AI evolve in the next 100 years?                     |
 | What is the agile methodology?                                     | What GPA do you have?                         |
 | What are the different types of software models, and when should each be used? | What is the smallest possible Turing machine?               |
@@ -149,11 +149,4 @@ Below is a list of answerable and unanswerable questions that will be used to ev
   - `Dockerfile`: Instructions to build Docker images.
   - `README.md`: Project documentation.
   - `.env.template`: Template for environment variables.
-
-
-## Affiliation
-
-Built by **Team 3**  
-Course: CSE 6550, Fall '24 (Software Engineering Concepts)  
-Institution: California State University, San Bernardino  
 
