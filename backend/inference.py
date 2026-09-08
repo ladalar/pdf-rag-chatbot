@@ -1,6 +1,7 @@
 import os
 import time
 from typing import List, Tuple
+import logfire
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_mistralai import ChatMistralAI
@@ -22,6 +23,36 @@ from .document_loading import (
     match_question,
     clean_text
 )
+
+LOGFIRE_TEXT_LIMIT = 12_000
+
+
+def _truncate_for_logfire(text: str) -> str:
+    if len(text) <= LOGFIRE_TEXT_LIMIT:
+        return text
+    return f"{text[:LOGFIRE_TEXT_LIMIT]}\n...[truncated]"
+
+
+def _format_messages_for_logfire(messages) -> str:
+    return "\n\n".join(
+        f"{message.type}: {message.content}" for message in messages
+    )
+
+
+def _record_token_usage(span, response) -> None:
+    usage = (
+        getattr(response, "usage_metadata", None)
+        or getattr(response, "response_metadata", {}).get("usage")
+    )
+    if not isinstance(usage, dict):
+        return
+    span.set_attributes({
+        "input_tokens": usage.get("input_tokens", usage.get("prompt_tokens")),
+        "output_tokens": usage.get(
+            "output_tokens", usage.get("completion_tokens")
+        ),
+    })
+
 
 # Load environment variables
 load_dotenv(override=True)
@@ -109,7 +140,22 @@ def rewrite_question(question: str) -> Tuple[str, List[str], str]:
     Processing: Uses a pre-defined template and language model to rewrite the question.
     """
     rewrite_message = rewrite_prompt().format_messages(text=question)
-    new_question = rewrite_llm.invoke(rewrite_message).content.strip()
+    prompt = _format_messages_for_logfire(rewrite_message)
+    with logfire.span(
+        "llm_rewrite",
+        model="open-mistral-7b",
+        prompt_length=len(prompt),
+        prompt=_truncate_for_logfire(prompt),
+    ) as span:
+        started_at = time.perf_counter()
+        response = rewrite_llm.invoke(rewrite_message)
+        new_question = response.content.strip()
+        span.set_attributes({
+            "response_length": len(response.content),
+            "response": _truncate_for_logfire(response.content),
+            "latency_ms": (time.perf_counter() - started_at) * 1000,
+        })
+        _record_token_usage(span, response)
     return new_question
 
 def update_question(question: str) -> Tuple[str, List[str], str]:
@@ -141,6 +187,11 @@ def update_question(question: str) -> Tuple[str, List[str], str]:
     return None, None, None
 
 def chat_completion(question: str) -> Tuple[str, str]:
+    with logfire.span("rag_query", query=question):
+        yield from _chat_completion(question)
+
+
+def _chat_completion(question: str) -> Tuple[str, str]:
     """
     Purpose: Generate a response to a user query using the LLM and relevant citations.
     Input:
@@ -180,11 +231,25 @@ def chat_completion(question: str) -> Tuple[str, str]:
 
     # LLM inference using Nemo Guardrails
     messages = get_prompt().format_messages(input=question, context=context)
+    prompt = _format_messages_for_logfire(messages)
     # Stream response from LLM
     full_response = {"answer": ""}
-    for chunk in llm.stream(messages):
-        full_response["answer"] += chunk.content
-        yield (chunk.content, MODEL_NAME)
+    with logfire.span(
+        "llm_inference",
+        model=MODEL_NAME,
+        prompt_length=len(prompt),
+        prompt=_truncate_for_logfire(prompt),
+    ) as span:
+        started_at = time.perf_counter()
+        for chunk in llm.stream(messages):
+            full_response["answer"] += chunk.content
+            _record_token_usage(span, chunk)
+            yield (chunk.content, MODEL_NAME)
+        span.set_attributes({
+            "response_length": len(full_response["answer"]),
+            "response": _truncate_for_logfire(full_response["answer"]),
+            "latency_ms": (time.perf_counter() - started_at) * 1000,
+        })
 
     # Handle citations if available
     if relevant_docs:

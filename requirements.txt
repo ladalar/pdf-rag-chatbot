@@ -5,6 +5,7 @@ langchain-community
 langchain-groq
 langchain-huggingface
 langchain-mistralai
+logfire
 numpy
 pandas
 pypdf
