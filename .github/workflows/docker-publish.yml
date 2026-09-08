@@ -39,7 +39,6 @@ jobs:
     - name: Create .env file with API keys
       run: |
         echo "MISTRAL_API_KEY=${{ secrets.MISTRAL_API_KEY }}" > .env
-        echo "HF_TOKEN=${{ secrets.HF_TOKEN }}" >> .env  # Add Hugging Face token here
 
     - name: Install Mambaforge
       run: |
