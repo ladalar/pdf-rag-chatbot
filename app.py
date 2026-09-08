@@ -2,6 +2,9 @@ corpus_source = "swebok" # Guide to the Software Engineering Body of Knowledge
 # corpus_source = "default" # "Software Engineering: A PRACTITIONER’S APPROACH"
 
 import os
+import logfire
+
+logfire.configure()
 
 # Add corpus source to enviroment variables
 CORPUS_SOURCE = os.path.join(os.path.dirname(os.path.abspath(__file__)), f"data/{corpus_source}")

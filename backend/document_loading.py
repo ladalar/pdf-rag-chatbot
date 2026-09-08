@@ -2,6 +2,7 @@ import os
 import re
 import json
 import numpy as np
+import logfire
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.retrievers import BM25Retriever
@@ -94,9 +95,27 @@ def similarity_search(
 		2. Filters results based on distance threshold
 		3. Returns filtered documents with their scores
 	"""
-	retrieved_docs = vector_store.similarity_search_with_score(question, k=k)
-	filtered_docs = [[doc, score] for doc, score in retrieved_docs if score <= distance_threshold]
-	return filtered_docs
+	with logfire.span(
+		"faiss_retrieval",
+		query=question,
+		requested_chunk_count=k,
+		distance_threshold=distance_threshold,
+	) as span:
+		retrieved_docs = vector_store.similarity_search_with_score(question, k=k)
+		filtered_docs = [
+			[doc, score]
+			for doc, score in retrieved_docs
+			if score <= distance_threshold
+		]
+		span.set_attributes({
+			"retrieved_chunk_count": len(retrieved_docs),
+			"filtered_chunk_count": len(filtered_docs),
+			"distance_scores": [float(score) for _, score in retrieved_docs],
+			"chunk_previews": [
+				doc.page_content[:200] for doc, _ in retrieved_docs
+			],
+		})
+		return filtered_docs
 
 def clean_text(text: str) -> str:
 	"""
