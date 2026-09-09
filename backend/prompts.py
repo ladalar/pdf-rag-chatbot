@@ -55,7 +55,8 @@ def validate_question(question: str) -> bool:
     # Remove incomplete questions
     ignore_list = [
         "what", "whatis", "what's", "explain",
-        "how", "howdoes", "howis", "when", "whenis", "why", "whyis", "who", "whois"
+        "how", "howdoes", "howis", "when", "whenis", "why", "whyis", "who", "whois",
+        "hi", "hello", "hey", "goodmorning", "goodafternoon", "goodevening",
     ]
     cleaned_question = remove_spaces(question.lower().strip())
     sanitized_question = remove_spaces(sanitize_question(question)).lower()

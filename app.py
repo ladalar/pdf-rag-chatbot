@@ -2,8 +2,11 @@ corpus_source = "swebok" # Guide to the Software Engineering Body of Knowledge
 # corpus_source = "default" # "Software Engineering: A PRACTITIONER’S APPROACH"
 
 import os
+from dotenv import load_dotenv
 import logfire
 
+# Load local development secrets without overwriting runtime environment values.
+load_dotenv()
 logfire.configure()
 
 # Add corpus source to enviroment variables

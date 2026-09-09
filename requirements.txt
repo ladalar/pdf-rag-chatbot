@@ -12,6 +12,7 @@ pypdf
 pytest
 python-dotenv
 streamlit
-sentence-transformers
 sqlalchemy
 tiktoken
+transformers==4.46.3
+sentence-transformers==3.2.1

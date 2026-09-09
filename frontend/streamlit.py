@@ -1,5 +1,6 @@
 import os
 import time
+import logging
 import streamlit as st
 from .pdf import serve_pdf
 from .questions import check_baseline_answerable
@@ -19,6 +20,7 @@ from .utils import (
 # Add rate limit constants
 MAX_REQUESTS_PER_MINUTE = 10  # 10 requests per minute
 BLOCK_DURATION_SECONDS = 3 * 60  # 3 minutes
+logger = logging.getLogger(__name__)
 
 def check_rate_limit():
     """Check if the user has exceeded the rate limit."""
@@ -108,10 +110,14 @@ def handle_user_input(prompt: str):
             conversation_id = save_conversation_to_db(prompt, response, answerable)
             update_session_messages(prompt, response, conversation_id, answerable)
             update_user_session(st.session_state.user_id)
-            st.rerun()
-        except Exception as e:
-            print(f"{e}")
-            st.success(f"Our systems are overloaded. Please try again.")
+        except Exception:
+            logger.exception("Failed to generate a response for user prompt")
+            st.error(
+                "Unable to generate a response right now. "
+                "Please check the MISTRAL_API_KEY and try again."
+            )
+            return
+    st.rerun()
 
 
 def generate_response(prompt: str, response_container):

@@ -13,6 +13,13 @@ def run_command(command, error_message):
         sys.exit(1)
 
 
+def ensure_env_file():
+    """Ensure runtime secrets are available from a local environment file."""
+    if not os.path.isfile(".env"):
+        print("Missing .env file. Copy .env.template to .env and add the required API keys.")
+        sys.exit(1)
+
+
 def stop_and_remove_containers(ports):
     """Stop and remove Docker containers running on specific ports."""
     print("Stopping and removing Docker containers on ports:", ports)
@@ -32,10 +39,10 @@ def stop_and_remove_containers(ports):
             sys.exit(1)
 
 
-def build_docker_image(mistral_key):
+def build_docker_image():
     """Build the Docker image."""
     print("Building the Docker image...")
-    run_command(f"docker build -t pdf-rag-chatbot . --build-arg MISTRAL={mistral_key}", "Failed to build Docker image")
+    run_command("docker build -t pdf-rag-chatbot .", "Failed to build Docker image")
 
 
 def display_loading_bar(duration):
@@ -68,7 +75,7 @@ def display_loading_bar(duration):
 def run_docker_container():
     """Run the Docker container."""
     print("Running the Docker container...")
-    run_command("docker run -d -p 8501:8501 pdf-rag-chatbot", "Failed to run Docker container")
+    run_command("docker run -d --env-file .env -p 8501:8501 pdf-rag-chatbot", "Failed to run Docker container")
     print("Docker container started successfully!")
     display_loading_bar(30)  # 30 seconds duration
     print("You can now access the application:")
@@ -78,14 +85,14 @@ def run_docker_container():
 
 def main():
     print("Starting cross-platform automation script.....")
+    ensure_env_file()
 
     # Step 1: Stop and remove existing Docker containers
     ports = [8501]
     stop_and_remove_containers(ports)
 
     # Step 2: Build the Docker image
-    mistral_key = input("Enter your Mistral API key: ")
-    build_docker_image(mistral_key)
+    build_docker_image()
 
     # Step 3: Run the Docker container
     run_docker_container()

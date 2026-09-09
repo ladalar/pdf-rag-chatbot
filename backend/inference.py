@@ -3,7 +3,6 @@ import time
 from typing import List, Tuple
 import logfire
 from dotenv import load_dotenv
-from langchain_groq import ChatGroq
 from langchain_mistralai import ChatMistralAI
 from nemoguardrails import RailsConfig
 from nemoguardrails.llm.providers import register_llm_provider
@@ -83,13 +82,13 @@ def load_faiss_vector_store(document_path: str, persist_directory: str) -> any:
 def get_api_key(key_name: str) -> str:
     """
     Purpose: Retrieve the API key for Mistral AI from environment variables.
-    Input: None
+    Input: Environment variable name.
     Output: MISTRAL_API_KEY as a string.
     Processing: Fetches and validates the API key from the environment variables.
     """
-    api_key = os.getenv("MISTRAL_API_KEY")
+    api_key = os.getenv(key_name)
     if not api_key or not isinstance(api_key, str) or not api_key.strip():
-        raise ValueError("MISTRAL_API_KEY not found or invalid in .env")
+        raise ValueError(f"{key_name} not found or invalid in .env")
     return api_key
 
 # -------------------------------
@@ -102,9 +101,19 @@ persist_directory = os.path.join(document_path, "faiss_indexes")
 faiss_store = load_faiss_vector_store(document_path, persist_directory)
 
 # Initialize the LLM
-MODEL_NAME = "mistral-large-2411"
-llm = ChatMistralAI(model=MODEL_NAME, mistral_api_key=get_api_key("MISTRAL_API_KEY"), temperature=0, max_tokens=500)
-rewrite_llm = ChatMistralAI(model="open-mistral-7b", mistral_api_key=get_api_key("MISTRAL_API_KEY"), temperature=0, max_tokens=40)
+MODEL_NAME = "open-mistral-7b"
+llm = ChatMistralAI(
+    model=MODEL_NAME,
+    mistral_api_key=get_api_key("MISTRAL_API_KEY"),
+    temperature=0,
+    max_tokens=500,
+)
+rewrite_llm = ChatMistralAI(
+    model=MODEL_NAME,
+    mistral_api_key=get_api_key("MISTRAL_API_KEY"),
+    temperature=0,
+    max_tokens=40,
+)
 
 # Guardrails
 register_llm_provider("mistral", ChatMistralAI)
@@ -143,7 +152,7 @@ def rewrite_question(question: str) -> Tuple[str, List[str], str]:
     prompt = _format_messages_for_logfire(rewrite_message)
     with logfire.span(
         "llm_rewrite",
-        model="open-mistral-7b",
+        model=MODEL_NAME,
         prompt_length=len(prompt),
         prompt=_truncate_for_logfire(prompt),
     ) as span:
@@ -182,7 +191,7 @@ def update_question(question: str) -> Tuple[str, List[str], str]:
     relevant_docs, context = fetch_relevant_documents(new_question)
     # print("Question rewritten: ", new_question)
     if relevant_docs:
-        time.sleep(1) # Avoids getting rate limited by the mistral api
+        time.sleep(1) # Avoids getting rate limited by the Mistral API
         return new_question, relevant_docs, context
     return None, None, None
 

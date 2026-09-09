@@ -25,11 +25,17 @@ The `setup.py` script automates the setup process, including downloading the rep
    ```bash
    cd pdf-rag-chatbot
    ```
-3. **Update Local Repository**:
+3. **Create the environment file**:
+   ```bash
+   cp .env.template .env
+   ```
+   Set `MISTRAL_API_KEY` and `LOGFIRE_TOKEN` in `.env`. The application uses Mistral's `open-mistral-7b` model, which is available on the free/Experiment API plan. The file is passed to the container only at runtime and is not included in the image.
+
+4. **Update Local Repository**:
    ```
    git pull origin main
    ```
-4. **Run the Setup Script**:  
+5. **Run the Setup Script**:
    ```bash
    python setup.py
    ```
@@ -38,11 +44,10 @@ The `setup.py` script automates the setup process, including downloading the rep
    python3 setup.py
    ```
 
-4. **Follow On-Screen Prompts**:
-   - The script will ask for a Mistral API key.
-   - It will stop any existing containers, pull updates, build the Docker image, and run the container.
+6. **Follow On-Screen Prompts**:
+   - The script will stop any existing containers, build the Docker image, and run the container using `.env`.
 
-5. **Access the Application**:
+7. **Access the Application**:
    - Website: [http://localhost:8501](http://localhost:8501)
 
 
@@ -60,12 +65,18 @@ If for any reason you cannot use `setup.py`, follow the steps below:
    cd pdf-rag-chatbot
    ```
 
-3. **Pull Updates**:
+3. **Create the environment file**:
+   ```bash
+   cp .env.template .env
+   ```
+   Set `MISTRAL_API_KEY` and `LOGFIRE_TOKEN` in `.env`.
+
+4. **Pull Updates**:
    ```bash
    git pull origin main
    ```
 
-4. **Stop and Remove Running Containers**:
+5. **Stop and Remove Running Containers**:
    - Check running containers:
      ```bash
      docker ps
@@ -79,14 +90,14 @@ If for any reason you cannot use `setup.py`, follow the steps below:
      docker rm <container_id>
      ```
 
-5. **Build Docker Image**:
+6. **Build Docker Image**:
    ```bash
-   docker build -t pdf-rag-chatbot . --build-arg MISTRAL=<your_api_key>
+   docker build -t pdf-rag-chatbot .
    ```
 
-6. **Run Docker Container**:
+7. **Run Docker Container**:
    ```bash
-   docker run -d -p 8501:8501 pdf-rag-chatbot
+   docker run -d --env-file .env -p 8501:8501 pdf-rag-chatbot
    ```
 **Access the Application**:
    - Website: [http://localhost:8501](http://localhost:8501)
@@ -149,4 +160,3 @@ Below is a list of answerable and unanswerable questions that will be used to ev
   - `Dockerfile`: Instructions to build Docker images.
   - `README.md`: Project documentation.
   - `.env.template`: Template for environment variables.
-
